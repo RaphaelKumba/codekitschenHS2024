@@ -84,19 +84,30 @@
 }
 
 .square > .squaretext:active {
-    transform: scale(0.9);
+    font-size: 30px;
 }
 
 .spacebox > .counter {
-    background-color: blanchedalmond;
+    background-color: sandybrown;
     display: flex;
     height: 130px;
     width: 100%;
 }
 
+.spacebox > .counter:hover {
+    background-color: firebrick;
+}
+
+.spacebox > .counter:active {
+    background-color: rosybrown;
+    transition-duration: 25ms;
+    transform: scale(98%);
+}
+
 .box-75 {
     width: 75%;
     text-align: center;
+    transition-duration: 25ms;
 }
 
 .box-25 {
