@@ -1,0 +1,10 @@
+.header {
+    display: flex;
+    min-height: 150px;
+    background-color: lavenderblush;
+}
+
+.header > .title {
+    font-size: 25px;
+    align-content: center;
+}
