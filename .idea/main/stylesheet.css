@@ -3,9 +3,19 @@
     scroll-behavior: smooth;
 }
 
+.title-text {
+    font-size: 50px;
+    color: white;
+}
+
+.big-text {
+    font-size: 35px;
+    color: white;
+}
+
 .header {
-    background-color: lightsteelblue;
-    box-shadow: -10px -10px 20px rgba(0,0,0,.1);
+    background-color: steelblue;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 15px;
     min-height: 150px;
     display: flex;
     border-radius: 10px;
@@ -13,10 +23,7 @@
 }
 
 .header > .title {
-    font-size: 50px;
-    align-content: center;
     margin: auto;
-    color: white;
     transition-duration: 0.2s;
 }
 
@@ -29,25 +36,75 @@
     transform: scale(0.9);
 }
 
+.spacebox {
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 15px;
+    height: 150px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 25px;
+    transition-duration: 0.2s;
+}
+
+.spacebox:hover {
+    height: 160px;
+    translate: 0px -5px;
+    transition-duration: 0.2s;
+}
+
+.boxes {
+    margin: 10px;
+    transition-duration: 0.2s;
+    border-radius: 10px;
+    align-items: center;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 5px;
+}
+
 .square {
-    background-color: slategrey;
+    background-color: darkturquoise;
     height: 130px;
     width: 50%;
-    margin: 10px;
-    border-radius: 10px;
-    transition-duration: 0.1s;
 }
 
 .square:hover {
     width: 75%;
-    transition-duration: 0.1s;
+    height: 140px;
+    translate: 0px 0px;
+    transition-duration: 0.2s;
 }
 
-.dualsquare {
-    border-radius: 10px;
-    box-shadow: 10px 20px 30px rgba(0,0,0,.3);
-    height: 150px;
-    display: flex;
-    justify-content: space-between;
-    margin: 25px;
+.square > .squaretext {
+    margin: auto;
+    transition-duration: 0.2s;
 }
+
+.square > .squaretext:hover {
+    transform: scale(1.2);
+    transition-duration: 0.2s;
+}
+
+.square > .squaretext:active {
+    transform: scale(0.9);
+}
+
+.spacebox > .counter {
+    background-color: blanchedalmond;
+    display: flex;
+    height: 130px;
+    width: 100%;
+}
+
+ .counter-text-box {
+     width: 75%;
+ }
+
+ .counter-count-box {
+     width: 25%;
+ }
+
+ .counter-text {
+     background-color: lightgrey;
+ }
+
