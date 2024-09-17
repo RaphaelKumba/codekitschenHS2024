@@ -106,11 +106,20 @@
 
 .box-75 {
     width: 75%;
-    text-align: center;
+    text-align: left;
+    margin-left: 50px;
     transition-duration: 25ms;
 }
 
 .box-25 {
     width: 25%;
-    text-align: center;
+    text-align: right;
+    margin-right: 50px;
+}
+
+.spacebox > .counter-disp {
+    background-color: sandybrown;
+    display: flex;
+    height: 130px;
+    width: 100%;
 }
