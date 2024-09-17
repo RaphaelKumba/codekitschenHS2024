@@ -1,6 +1,7 @@
 * {
     font-family: "Helvetica Neue";
     scroll-behavior: smooth;
+    letter-spacing: .05rem;
 }
 
 .title-text {
@@ -48,8 +49,7 @@
 }
 
 .spacebox:hover {
-    height: 160px;
-    translate: 0px -5px;
+    transform: scaleY(110%);
     transition-duration: 0.2s;
 }
 
@@ -70,8 +70,6 @@
 
 .square:hover {
     width: 75%;
-    height: 140px;
-    translate: 0px 0px;
     transition-duration: 0.2s;
 }
 
@@ -96,15 +94,12 @@
     width: 100%;
 }
 
- .counter-text-box {
-     width: 75%;
- }
+.box-75 {
+    width: 75%;
+    text-align: center;
+}
 
- .counter-count-box {
-     width: 25%;
- }
-
- .counter-text {
-     background-color: lightgrey;
- }
-
+.box-25 {
+    width: 25%;
+    text-align: center;
+}
