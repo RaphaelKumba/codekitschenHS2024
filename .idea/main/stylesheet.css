@@ -1,10 +1,53 @@
+* {
+    font-family: "Helvetica Neue";
+    scroll-behavior: smooth;
+}
+
 .header {
-    display: flex;
+    background-color: lightsteelblue;
+    box-shadow: -10px -10px 20px rgba(0,0,0,.1);
     min-height: 150px;
-    background-color: lavenderblush;
+    display: flex;
+    border-radius: 10px;
+    margin: 25px;
 }
 
 .header > .title {
-    font-size: 25px;
+    font-size: 50px;
     align-content: center;
+    margin: auto;
+    color: white;
+    transition-duration: 0.2s;
+}
+
+.header > .title:hover {
+    transform: scale(1.2);
+    transition-duration: 0.2s;
+}
+
+.header > .title:active {
+    transform: scale(0.9);
+}
+
+.square {
+    background-color: slategrey;
+    height: 130px;
+    width: 50%;
+    margin: 10px;
+    border-radius: 10px;
+    transition-duration: 0.1s;
+}
+
+.square:hover {
+    width: 75%;
+    transition-duration: 0.1s;
+}
+
+.dualsquare {
+    border-radius: 10px;
+    box-shadow: 10px 20px 30px rgba(0,0,0,.3);
+    height: 150px;
+    display: flex;
+    justify-content: space-between;
+    margin: 25px;
 }
