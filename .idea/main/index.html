@@ -5,12 +5,6 @@
     <title>Code Kitchen</title>
     <link rel="stylesheet" type="text/css" href="stylesheet.css" />
     <script src="script.js"></script>
-    <script src="observable.js"></script>
-    <script>
-        const countController = CountController();
-        CountView (countController, document.getElementById('counter'));
-        countController.update();
-    </script>
 </head>
 <body>
 <div class="header">
@@ -20,7 +14,7 @@
     <div class="square boxes"><div class="squaretext big-text">Croissant</div></div>
     <div class="square boxes"><div class="squaretext big-text">Baguette</div></div>
 </div>
-<div class="spacebox">
+<div class="spacebox interactive">
     <div class="counter boxes" id="counter">
         <div class="box-75"><div class="text big-text">Click to count:</div></div>
         <div class="box-25"><div class="text big-text" id="count">0</div></div>
@@ -33,5 +27,12 @@
         <div class="box-25"><div class="text big-text" id="count-total">0</div></div>
     </div>
 </div>
+
+<div class="spacebox interactive">
+    <div class="counter boxes" id="counter-reset">
+        <div class="text big-text">Reset</div>
+    </div>
+</div>
+
 </body>
 </html>

@@ -1,40 +1,17 @@
 window.onload = function(){
     var counter = 0;
+
+    const updateElements = count => {
+        document.getElementById("count").innerHTML = count;
+        document.getElementById("count-total").innerHTML = count;
+    }
+
     document.getElementById("counter").onmousedown = function () {
-        document.getElementById("count").innerHTML = counter++;
-    };
-};
-
-const CountController = () => {
-    var count = 0;
-
-    const countModel = ObservableList([]); // observable array of Todos, this state is private
-
-    const Update = () => {
-        const countAttr = Observable(count++);
-        console.log("Counter: " + count);
-        return {
-            onCountChanged: countAttr.onChange
-        }
-    }
-
-
-    const newUpdate = () => {
-        const newUpdate = Update();
-        countModel.add(newUpdate);
-        return newUpdate;
+        updateElements(++counter);
     };
 
-    return {
-        update: newUpdate()
-    }
-};
+    document.getElementById("counter-reset").onmousedown = function () {
+        updateElements(counter = 0);
+    };
 
-const CountView = (countController, rootElement) => {
-    const count = counting => {
-        document.getElementById("count").innerHTML = counter++;
-    }
-    // binding
-
-    countController.onCountChanged(count);
 };

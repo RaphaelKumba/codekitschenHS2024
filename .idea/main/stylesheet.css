@@ -123,3 +123,7 @@
     height: 130px;
     width: 100%;
 }
+
+#counter-reset > .text {
+    margin: auto;
+}
