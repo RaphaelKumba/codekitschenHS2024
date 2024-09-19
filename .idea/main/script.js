@@ -1,26 +1,31 @@
 window.onload = function(){
     const calcElements = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "÷", "×", "+", "-", ".", "="];
-    const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-    const operations = ["÷", "×", "+", "-"];
+    const numbers      = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    const operations   = ["÷", "×", "+", "-"];
 
-    var displayText = "";
-    var numberBuilder = "";
-    var noFloat = true;
+    var displayText     = "";
+    var numberBuilder   = "";
+    var noFloat       = true;
 
     var tasks = [];
 
     const computeTasks = () => {
-        var res = 0;
-        var left = 0;
-        var right = 0;
-        for (const task in tasks) {
-            if (task in operations) {
+        var res       = 0;
+        var left      = 0;
+        var right     = 0;
+        var operation   = "";
 
-            } else {
-
-            }
+        while (tasks.length > 1) {
+            left = parseFloat(tasks.shift());
+            operation = tasks.shift();
+            right = parseFloat(tasks.shift());
+            if (operation === "+") res = left + right;
+            if (operation === "-") res = left - right;
+            if (operation === "÷") res = left / right;
+            if (operation === "×") res = left * right;
+            tasks.unshift(res);
         }
-        return "RESULT";
+        return res;
     }
 
     const updateDisplay = data => {
@@ -31,14 +36,19 @@ window.onload = function(){
         }
         document.getElementById("display-text").innerHTML = displayText;
     }
-
     const resetDisplay = () => displayText = "";
+    const builderAppend = input => numberBuilder += input;
+    const builderReset = () => numberBuilder = "";
+
+   const isValid = number => {
+
+   }
 
     const manageInput = input => {
 
-        if (numbers.includes(input) || (input === "." && noFloat)) {
+        if (numbers.includes(input) || (input === "." && noFloat && numberBuilder.length > 0)) {
             updateDisplay(input);
-            numberBuilder += input;
+            builderAppend(input)
         }
 
         if (operations.includes(input)) {
@@ -46,18 +56,18 @@ window.onload = function(){
             if (numberBuilder.length > 0) {
                 updateDisplay(input);
                 tasks.push(numberBuilder);
-                numberBuilder = "";
+                builderReset();
                 tasks.push(input);
             }
         }
 
         if (input === ".") noFloat = false;
 
-        if (input === "=" && numberBuilder !== "") {
+        if (input === "=" && numberBuilder.length > 0 && tasks.length > 1) {
             resetDisplay();
             tasks.push(numberBuilder);
-            numberBuilder = "";
-            document.getElementById("display-text").innerHTML = "Compute";
+            builderReset();
+            document.getElementById("display-text").innerHTML = computeTasks();
         }
 
     }
@@ -67,4 +77,5 @@ window.onload = function(){
             manageInput(calcElements[key]);
         };
     }
+
 };
