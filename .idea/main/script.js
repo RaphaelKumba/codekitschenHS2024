@@ -1,7 +1,11 @@
 window.onload = function(){
     const calcElements = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "÷", "×", "+", "-", ".", "="];
     const numbers      = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-    const operations   = ["÷", "×", "+", "-"];
+    const operations   = ["÷", "×", "+", "-", "x", "/"];
+
+    const parseOperation = operation => {
+
+    }
 
     var displayText     = "";
     var numberBuilder   = "";
@@ -9,16 +13,15 @@ window.onload = function(){
 
     var tasks = [];
 
+    const validNumberPressed = input => numbers.includes(input) || (input === "." && noFloat && numberBuilder.length > 0);
+
     const computeTasks = () => {
         var res       = 0;
         var left      = 0;
         var right     = 0;
         var operation   = "";
 
-        console.log("Number of Tasks:" + tasks.length);
-
         while (tasks.length > 1) {
-            console.log(tasks);
             left = parseFloat(tasks.shift());
             operation = tasks.shift();
             right = parseFloat(tasks.shift());
@@ -28,7 +31,6 @@ window.onload = function(){
             if (operation === "×") res = left * right;
             tasks.unshift(res);
         }
-        console.log(tasks);
         return res;
     }
 
@@ -40,23 +42,29 @@ window.onload = function(){
         }
         document.getElementById("display-text").innerHTML = displayText;
     }
+
     const resetDisplay = () => displayText = "";
     const builderAppend = input => numberBuilder += input;
     const builderReset = () => numberBuilder = "";
 
     const manageInput = input => {
-
-        if (numbers.includes(input) || (input === "." && noFloat && numberBuilder.length > 0)) {
+        if (validNumberPressed(input)) {
             updateDisplay(input);
             builderAppend(input)
         }
 
         if (operations.includes(input)) {
             noFloat = true;
-            if (numberBuilder.length > 0 || tasks.length === 1) {
+            // Case of first operation
+            if (numberBuilder.length > 0) {
                 updateDisplay(input);
                 tasks.push(numberBuilder);
                 builderReset();
+                tasks.push(input);
+            }
+            // case of a new operation on an existing result
+            else if (tasks.length === 1 && numberBuilder === "") {
+                updateDisplay(input);
                 tasks.push(input);
             }
         }
@@ -77,4 +85,7 @@ window.onload = function(){
         };
     }
 
+    document.addEventListener('keydown', function(event) {
+        manageInput(event.key);
+    });
 };

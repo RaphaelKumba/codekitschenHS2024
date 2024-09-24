@@ -24,10 +24,14 @@
     color: black;
 }
 
+html {
+    background-color: #444444;
+}
+
 .header {
     min-width: 400px;
     background-color: steelblue;
-    border-radius: 10px;
+    border-radius: 2px;
     box-shadow: 0px 0px 3px #555555;
     height: 150px;
     display: flex;
@@ -48,8 +52,7 @@
 .display {
     min-width: 400px;
     background-color: #AAAAAA;
-    border-radius: 10px;
-    box-shadow: 0px 0px 5px #000000;
+    border-radius: 2px;
     height: 75px;
     margin: 25px;
     text-align: right;
@@ -72,8 +75,7 @@
 
 .part {
     background-color: #EEEEEE;
-    border-radius: 10px;
-    box-shadow: 0px 0px 2px #555555;
+    border-radius: 2px;
     height: 45px;
     min-width: 80px;
     flex-grow: 1;
@@ -82,8 +84,8 @@
 }
 
 .part:hover {
-    background-color: #CCCCCC;
-    transition-duration: 25ms;
+    background-color: #FFFFFF;
+    transition-duration: 5ms;
 }
 
 .part:active {
