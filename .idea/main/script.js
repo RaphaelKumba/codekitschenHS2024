@@ -4,18 +4,16 @@ var noFloat       = true;
 
 var tasks = [];
 
-const buttons = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "÷", "×", "+", "-", ".", "="];
+const buttons = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "÷", "×", "+", "-", "%", ".", "=", "AC"];
 const numbers      = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-const operations   = ["÷", "×", "+", "-"];
-function validKey(key){
+const operations   = ["÷", "×", "+", "-", "%"];
+const validKey = key => {
     if (buttons.includes(key))      return key;
     if (key === "/")                return "÷";
     if (key === "x" || key === "*") return "×";
+    if (key === "Enter")            return "=";
     return false;
 }
-
-const firstOperation    = numberBuilder.length > 0;
-const composedOperation = tasks.length === 1 && numberBuilder === "";
 
 const builderAppend = input => numberBuilder += input;
 const builderReset = () => numberBuilder = "";
@@ -24,11 +22,15 @@ const updateDisplay = data => {
     if (operations.includes(data)) {
         displayText += " " + data + " ";
     } else {
-        displayText += data;
+        if (displayText === "0" && data !== "0" && data !== ".") displayText = data;
+        else displayText += data;
     }
     document.getElementById("display-text").innerHTML = displayText;
 }
-const resetDisplay = () => displayText = "";
+const resetDisplay = () => {
+    displayText = "0";
+    document.getElementById("display-text").innerHTML = displayText;
+}
 
 const validNumber = input => numbers.includes(input) || (input === "." && noFloat && numberBuilder.length > 0);
 
@@ -46,13 +48,13 @@ const computeTasks = () => {
         if (operation === "-") res = left - right;
         if (operation === "÷") res = left / right;
         if (operation === "×") res = left * right;
+        if (operation === "%") res = left % right;
         tasks.unshift(res);
     }
     return res;
 }
 
-function manageInput(input) {
-
+const manageInput = input => {
     if (validNumber(input)) {
         updateDisplay(input);
         builderAppend(input)
@@ -60,13 +62,13 @@ function manageInput(input) {
 
     if (operations.includes(input)) {
         noFloat = true;
-        if (firstOperation) {
+        if (numberBuilder.length > 0) {
             updateDisplay(input);
             tasks.push(numberBuilder);
             builderReset();
             tasks.push(input);
 
-        } else if (composedOperation) {
+        } else if (tasks.length === 1 && numberBuilder === "") {
             updateDisplay(input);
             tasks.push(input);
         }
@@ -78,7 +80,14 @@ function manageInput(input) {
         resetDisplay();
         tasks.push(numberBuilder);
         builderReset();
-        document.getElementById("display-text").innerHTML = computeTasks();
+        updateDisplay(computeTasks());
+    }
+
+    if (input === "AC") {
+        resetDisplay();
+        builderReset();
+        noFloat = true;
+        tasks = [];
     }
 }
 
@@ -90,7 +99,6 @@ window.onload = function(){
     }
 
     document.addEventListener('keydown', function(event) {
-        console.log(validKey(event.key));
         manageInput(validKey(event.key));
     });
 };
