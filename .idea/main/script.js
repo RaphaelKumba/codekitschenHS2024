@@ -99,6 +99,15 @@ const manageInput = input => {
         tasks = [];
     }
 
+    if (display === "2024") triggerDumbText();
+
+}
+
+async function triggerDumbText(){
+    document.getElementById("dumb").innerHTML = "Uh Oh";
+    document.getElementById("dumb").style.color = "white";
+    await new Promise(r => setTimeout(r, 1000));
+    document.getElementById("dumb").style.color = "#444444";
 }
 
 async function acTriggered() {
@@ -106,20 +115,19 @@ async function acTriggered() {
         document.getElementById(buttons[button]).style.transitionDuration = "0ms";
         document.getElementById(buttons[button]).style.backgroundColor = "red";
     }
-    document.getElementById("part-text").style.color = "white";
-    document.getElementById("part-text").style.transitionDuration = "0ms";
+    document.getElementById("=").style.backgroundColor = "#AAAAAA";
+    document.getElementsByName("part-text").forEach((part) => { part.style.color = "white"; part.style.transitionDuration = "0ms" })
     document.getElementById("display").style.transitionDuration = "0ms";
     document.getElementById("display").style.backgroundColor = "red";
 
-    await new Promise(r => setTimeout(r, 25));
+    await new Promise(r => setTimeout(r, 1));
 
     for (const button in buttons) {
         document.getElementById(buttons[button]).style.transitionDuration = "1s";
         document.getElementById(buttons[button]).style.backgroundColor = "";
     }
-    document.getElementById("part-text").style.color = "";
-    document.getElementById("part-text").style.transitionDuration = "1s";
-    document.getElementById("display").style.transitionDuration = "1s";
+    document.getElementsByName("part-text").forEach((part) => { part.style.color = ""; part.style.transitionDuration = ".5s" })
+    document.getElementById("display").style.transitionDuration = ".5s";
     document.getElementById("display").style.backgroundColor = "";
 }
 

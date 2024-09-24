@@ -76,7 +76,7 @@ html {
 }
 
 .part {
-    background-color: #EEEEEE;
+    background-color: #DDDDDD;
     border-radius: 2px;
     height: 45px;
     min-width: 45px;
@@ -106,7 +106,7 @@ html {
 }
 
 .operation:hover {
-    background-color: #DDDDDD;
+    background-color: #EEEEEE;
 }
 
 .operation:active {
@@ -131,4 +131,13 @@ html {
     background-color: #FF0000;
     transition-duration: 0ms;
     transform: scale(1.05);
+}
+
+.dumb-text {
+    height: 250px;
+    color: white;
+    font-size: 150px;
+    text-align: center;
+    margin: auto;
+    transition-duration: 1s;
 }
