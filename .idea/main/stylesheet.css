@@ -79,7 +79,7 @@ html {
     height: 45px;
     min-width: 45px;
     flex-grow: 1;
-    margin: 5px;
+    margin: 2px;
     transition-duration: 500ms;
 }
 

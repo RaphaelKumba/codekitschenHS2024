@@ -1,6 +1,7 @@
-var display  = "";
-var number   = "";
-var isFloat= false;
+var display   = "";
+var number    = "";
+var isFloat = false;
+var computable= false;
 
 var tasks = [];
 
@@ -16,25 +17,17 @@ const validKey = key => {
     return false;
 }
 
-const builderAppend = input => number += input;
-const builderReset = () => number = "";
-
 const updateDisplay = () => document.getElementById("display-text").innerHTML = display;
-
-const displayAddNumber = nbr => {
-    display += nbr;
-    updateDisplay();
-}
-
-const displayAddOperation = opp => {
-    display += " " + opp + " ";
-    updateDisplay();
-}
+const resetDisplay = () => document.getElementById("display-text").innerHTML = display = "0";
+const setDisplay = input => document.getElementById("display-text").innerHTML = display = input;
+const displayAddNumber = nbr => { if (display === "0") display = nbr; else display += nbr; updateDisplay(); }
+const displayAddOperation = opp => { display += " " + opp + " "; updateDisplay(); }
 
 const isNumber = input => numbers.includes(input);
 const setFloat = input => input === "." && number.length > 0 && !isFloat;
 const isOperation = input => operations.includes(input);
-const reset = () => number = ""; isFloat = false;
+const isCompute = input => input === "=" && tasks.length > 1;
+const reset = () => { number = ""; isFloat = false; }
 
 const computeTasks = () => {
     let res= 0;
@@ -48,7 +41,6 @@ const computeTasks = () => {
             case "÷": res = left / right; break;
             case "×": res = left * right; break;
             case "%": res = left % right; break;
-            default: throw new Error();
         }
         tasks.unshift(res);
     }
@@ -58,51 +50,39 @@ const computeTasks = () => {
 const manageInput = input => {
 
     if (isNumber(input)) {
+        computable = true;
         number += input;
         displayAddNumber(input);
     }
 
     if (setFloat(input)) {
+        computable = false;
         isFloat = true;
         number += input;
         displayAddNumber(input);
     }
 
-    if (isOperation(input)) {
+    if (isOperation(input) && computable) {
+        computable = false;
+        tasks.push(number);
+        tasks.push(input);
         reset();
         displayAddOperation(input);
     }
 
-    /*
-    if (operations.includes(input)) {
-        noFloat = true;
-        if (number.length > 0) {
-            displayAddOpp(input);
-            tasks.push(number);
-            builderReset();
-            tasks.push(input);
-
-        } else if (tasks.length === 1 && number === "") {
-            updateDisplay(input);
-            tasks.push(input);
-        }
+    if (isCompute(input) && computable) {
+        computable = false;
+        tasks.push(number);
+        setDisplay(computeTasks());
+        reset();
     }
-        if (input === ".") noFloat = false;
 
-        if (input === "=" && number.length > 0 && tasks.length > 1) {
-            resetDisplay();
-            tasks.push(number);
-            builderReset();
-            updateDisplay(computeTasks());
-        }
-
-        if (input === "AC") {
-            resetDisplay();
-            builderReset();
-            noFloat = true;
-            tasks = [];
-        }
-         */
+    if (input === "AC") {
+        computable = false;
+        reset();
+        resetDisplay();
+        tasks = [];
+    }
 
 }
 
