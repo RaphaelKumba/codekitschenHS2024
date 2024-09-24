@@ -4,6 +4,8 @@ var isFloat     = false;
 var computable  = false;
 var tasks          = [];
 
+const historicFacts = JSON.parse('{"400": "Highland Maya fall to the lowland city of Teotihuacan", "431": "Council of Ephesus", "34" : "Crucifixion of Jesus Crist", "0": "Birth of Jesus Christ", "-776" : "First recorded Ancient Olympic Games", "2024":"Code Kitschen"}');
+
 const buttons    = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "÷", "×", "+", "-", "%", ".", "=", "AC", "⌫", "int"];
 const numbers    = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const operations = ["÷", "×", "+", "-", "%"];
@@ -97,17 +99,15 @@ const manageInput = input => {
         resetDisplay();
         acTriggered();
         tasks = [];
+        triggerFact(display);
     }
-
-    if (display === "2024") triggerDumbText();
-
 }
 
-async function triggerDumbText(){
-    document.getElementById("dumb").innerHTML = "Uh Oh";
-    document.getElementById("dumb").style.color = "white";
-    await new Promise(r => setTimeout(r, 1000));
-    document.getElementById("dumb").style.color = "#444444";
+async function triggerFact(display){
+    if (historicFacts[display]) document.getElementById("historic-fact").innerHTML = historicFacts[display];
+    document.getElementById("historic-fact").style.color = "white";
+    await new Promise(r => setTimeout(r, 5000));
+    document.getElementById("historic-fact").style.color = "#444444";
 }
 
 async function acTriggered() {

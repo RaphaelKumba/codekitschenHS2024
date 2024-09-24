@@ -28,6 +28,11 @@ html {
     background-color: #444444;
 }
 
+.container {
+    margin: auto;
+    max-width: 777px;
+}
+
 .header {
     min-width: 400px;
     background-color: steelblue;
@@ -112,7 +117,7 @@ html {
 .operation:active {
     background-color: #AAAAAA;
     transition-duration: 0ms;
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
 .calculate {
@@ -133,10 +138,11 @@ html {
     transform: scale(1.05);
 }
 
-.dumb-text {
+.historic-fact {
     height: 250px;
     color: white;
-    font-size: 150px;
+    font-size: 25px;
+    vertical-align: center;
     text-align: center;
     margin: auto;
     transition-duration: 1s;
