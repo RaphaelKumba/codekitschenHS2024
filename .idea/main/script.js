@@ -4,7 +4,7 @@ var isFloat     = false;
 var computable  = false;
 var tasks          = [];
 
-const buttons    = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "÷", "×", "+", "-", "%", ".", "=", "AC", "⌫"];
+const buttons    = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "÷", "×", "+", "-", "%", ".", "=", "AC", "⌫", "int"];
 const numbers    = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const operations = ["÷", "×", "+", "-", "%"];
 
@@ -29,6 +29,7 @@ const isNumber = input           => numbers.includes(input);
 const setFloat = input           => input === "." && number.length > 0 && !isFloat;
 const reset = ()           => { number = "0"; isFloat = false; }
 const isOperation = input        => operations.includes(input);
+const isConvertInteger = input   => input === "int" && tasks.length === 1;
 const isCompute = input          => input === "=" && tasks.length > 1;
 const isDelete = input           => input === "⌫" && number > 0;
 
@@ -36,7 +37,6 @@ const isDelete = input           => input === "⌫" && number > 0;
 const computeTasks = () => {
     let res= 0;
     while (tasks.length > 1) {
-        console.log(tasks);
         let left = parseFloat(tasks.shift());
         let operation = tasks.shift();
         let right = parseFloat(tasks.shift());
@@ -75,6 +75,11 @@ const manageInput = input => {
         displayAddOperation(input);
     }
 
+    if (isConvertInteger(input)) {
+        tasks[0] = parseInt(tasks[0], 10);
+        setDisplay(tasks[0]);
+    }
+
     if (isCompute(input) && computable) {
         tasks.push(number);
         setDisplay(computeTasks());
@@ -90,9 +95,32 @@ const manageInput = input => {
         computable = false;
         reset();
         resetDisplay();
+        acTriggered();
         tasks = [];
     }
 
+}
+
+async function acTriggered() {
+    for (const button in buttons) {
+        document.getElementById(buttons[button]).style.transitionDuration = "0ms";
+        document.getElementById(buttons[button]).style.backgroundColor = "red";
+    }
+    document.getElementById("part-text").style.color = "white";
+    document.getElementById("part-text").style.transitionDuration = "0ms";
+    document.getElementById("display").style.transitionDuration = "0ms";
+    document.getElementById("display").style.backgroundColor = "red";
+
+    await new Promise(r => setTimeout(r, 25));
+
+    for (const button in buttons) {
+        document.getElementById(buttons[button]).style.transitionDuration = "1s";
+        document.getElementById(buttons[button]).style.backgroundColor = "";
+    }
+    document.getElementById("part-text").style.color = "";
+    document.getElementById("part-text").style.transitionDuration = "1s";
+    document.getElementById("display").style.transitionDuration = "1s";
+    document.getElementById("display").style.backgroundColor = "";
 }
 
 window.onload = function(){
