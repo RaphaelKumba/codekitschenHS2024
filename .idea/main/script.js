@@ -1,12 +1,13 @@
-var displayText     = "";
-var numberBuilder   = "";
-var noFloat       = true;
+var display  = "";
+var number   = "";
+var isFloat= false;
 
 var tasks = [];
 
 const buttons = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "÷", "×", "+", "-", "%", ".", "=", "AC"];
 const numbers      = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const operations   = ["÷", "×", "+", "-", "%"];
+
 const validKey = key => {
     if (buttons.includes(key))      return key;
     if (key === "/")                return "÷";
@@ -15,80 +16,94 @@ const validKey = key => {
     return false;
 }
 
-const builderAppend = input => numberBuilder += input;
-const builderReset = () => numberBuilder = "";
+const builderAppend = input => number += input;
+const builderReset = () => number = "";
 
-const updateDisplay = data => {
-    if (operations.includes(data)) {
-        displayText += " " + data + " ";
-    } else {
-        if (displayText === "0" && data !== "0" && data !== ".") displayText = data;
-        else displayText += data;
-    }
-    document.getElementById("display-text").innerHTML = displayText;
-}
-const resetDisplay = () => {
-    displayText = "0";
-    document.getElementById("display-text").innerHTML = displayText;
+const updateDisplay = () => document.getElementById("display-text").innerHTML = display;
+
+const displayAddNumber = nbr => {
+    display += nbr;
+    updateDisplay();
 }
 
-const validNumber = input => numbers.includes(input) || (input === "." && noFloat && numberBuilder.length > 0);
+const displayAddOperation = opp => {
+    display += " " + opp + " ";
+    updateDisplay();
+}
+
+const isNumber = input => numbers.includes(input);
+const setFloat = input => input === "." && number.length > 0 && !isFloat;
+const isOperation = input => operations.includes(input);
+const reset = () => number = ""; isFloat = false;
 
 const computeTasks = () => {
-    var res       = 0;
-    var left      = 0;
-    var right     = 0;
-    var operation   = "";
-
+    let res= 0;
     while (tasks.length > 1) {
-        left = parseFloat(tasks.shift());
-        operation = tasks.shift();
-        right = parseFloat(tasks.shift());
-        if (operation === "+") res = left + right;
-        if (operation === "-") res = left - right;
-        if (operation === "÷") res = left / right;
-        if (operation === "×") res = left * right;
-        if (operation === "%") res = left % right;
+        let left = parseFloat(tasks.shift());
+        let operation = tasks.shift();
+        let right = parseFloat(tasks.shift());
+        switch (operation) {
+            case "+": res = left + right; break;
+            case "-": res = left - right; break;
+            case "÷": res = left / right; break;
+            case "×": res = left * right; break;
+            case "%": res = left % right; break;
+            default: throw new Error();
+        }
         tasks.unshift(res);
     }
     return res;
 }
 
 const manageInput = input => {
-    if (validNumber(input)) {
-        updateDisplay(input);
-        builderAppend(input)
+
+    if (isNumber(input)) {
+        number += input;
+        displayAddNumber(input);
     }
 
+    if (setFloat(input)) {
+        isFloat = true;
+        number += input;
+        displayAddNumber(input);
+    }
+
+    if (isOperation(input)) {
+        reset();
+        displayAddOperation(input);
+    }
+
+    /*
     if (operations.includes(input)) {
         noFloat = true;
-        if (numberBuilder.length > 0) {
-            updateDisplay(input);
-            tasks.push(numberBuilder);
+        if (number.length > 0) {
+            displayAddOpp(input);
+            tasks.push(number);
             builderReset();
             tasks.push(input);
 
-        } else if (tasks.length === 1 && numberBuilder === "") {
+        } else if (tasks.length === 1 && number === "") {
             updateDisplay(input);
             tasks.push(input);
         }
     }
+        if (input === ".") noFloat = false;
 
-    if (input === ".") noFloat = false;
+        if (input === "=" && number.length > 0 && tasks.length > 1) {
+            resetDisplay();
+            tasks.push(number);
+            builderReset();
+            updateDisplay(computeTasks());
+        }
 
-    if (input === "=" && numberBuilder.length > 0 && tasks.length > 1) {
-        resetDisplay();
-        tasks.push(numberBuilder);
-        builderReset();
-        updateDisplay(computeTasks());
-    }
+        if (input === "AC") {
+            resetDisplay();
+            builderReset();
+            noFloat = true;
+            tasks = [];
+        }
+         */
 
-    if (input === "AC") {
-        resetDisplay();
-        builderReset();
-        noFloat = true;
-        tasks = [];
-    }
 }
 
 window.onload = function(){
