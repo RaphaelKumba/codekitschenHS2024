@@ -15,7 +15,10 @@ window.onload = function(){
         var right     = 0;
         var operation   = "";
 
+        console.log("Number of Tasks:" + tasks.length);
+
         while (tasks.length > 1) {
+            console.log(tasks);
             left = parseFloat(tasks.shift());
             operation = tasks.shift();
             right = parseFloat(tasks.shift());
@@ -25,6 +28,7 @@ window.onload = function(){
             if (operation === "×") res = left * right;
             tasks.unshift(res);
         }
+        console.log(tasks);
         return res;
     }
 
@@ -40,10 +44,6 @@ window.onload = function(){
     const builderAppend = input => numberBuilder += input;
     const builderReset = () => numberBuilder = "";
 
-   const isValid = number => {
-
-   }
-
     const manageInput = input => {
 
         if (numbers.includes(input) || (input === "." && noFloat && numberBuilder.length > 0)) {
@@ -53,7 +53,7 @@ window.onload = function(){
 
         if (operations.includes(input)) {
             noFloat = true;
-            if (numberBuilder.length > 0) {
+            if (numberBuilder.length > 0 || tasks.length === 1) {
                 updateDisplay(input);
                 tasks.push(numberBuilder);
                 builderReset();
@@ -69,7 +69,6 @@ window.onload = function(){
             builderReset();
             document.getElementById("display-text").innerHTML = computeTasks();
         }
-
     }
 
     for (const key in calcElements) {
